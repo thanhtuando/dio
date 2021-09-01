@@ -1,6 +1,8 @@
 Language: [English](README.md) | [中文简体](README-ZH.md)
 
 # dio
+
+[![build status](https://img.shields.io/travis/flutterchina/dio/vm.svg?style=flat-square)](https://travis-ci.org/flutterchina/dio)
 [![Pub](https://img.shields.io/pub/v/dio.svg?style=flat-square)](https://pub.dartlang.org/packages/dio)
 [![support](https://img.shields.io/badge/platform-flutter%7Cflutter%20web%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://github.com/flutterchina/dio)
 
@@ -34,12 +36,17 @@ void getHttp() async {
 
 🎉 A curated list of awesome things related to dio.
 
-### Plugins (support 4.0)
+### Plugins
 
 | Plugins                                                      | Status                                                       | Description                                                  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [dio_cookie_manager](https://github.com/flutterchina/dio/tree/master/plugins/cookie_manager) | [![Pub](https://img.shields.io/pub/v/dio_http2_adapter.svg?style=flat-square)](https://pub.dartlang.org/packages/dio_http2_adapter) | A cookie manager for Dio                                     |
 | [dio_http2_adapter](https://github.com/flutterchina/dio/tree/master/plugins/http2_adapter) | [![Pub](https://img.shields.io/pub/v/dio_cookie_manager.svg?style=flat-square)](https://pub.dartlang.org/packages/dio_cookie_manager) | A Dio HttpClientAdapter which support Http/2.0               |
+| [dio_flutter_transformer](https://github.com/flutterchina/dio_flutter_transformer) | [![Pub](https://img.shields.io/pub/v/dio_flutter_transformer.svg?style=flat-square)](https://pub.dartlang.org/packages/dio_flutter_transformer) | A Dio transformer especially for flutter, by which the json decoding will be in background with `compute` function. |
+| [dio_http_cache](https://github.com/hurshi/dio-http-cache)   | [![Pub](https://img.shields.io/pub/v/dio_http_cache.svg?style=flat-square)](https://pub.dartlang.org/packages/dio_http_cache) | A cache library for Dio, like [Rxcache](https://github.com/VictorAlbertos/RxCache) in Android. dio-http-cache uses [sqflite](https://github.com/tekartik/sqflite) as disk cache, and [LRU](https://github.com/google/quiver-dart) strategy as memory cache. |
+| [retrofit](https://github.com/trevorwang/retrofit.dart/)     | [![Pub](https://img.shields.io/pub/v/retrofit.svg?style=flat-square)](https://pub.dartlang.org/packages/retrofit) | retrofit.dart is an dio client generator using source_gen and inspired by Chopper and Retrofit. |
+| [dio_firebase_performance](https://github.com/eyeem/dio_firebase_performance)     | [![Pub](https://img.shields.io/pub/v/dio_firebase_performance.svg?style=flat-square)](https://pub.dartlang.org/packages/dio_firebase_performance) | A Dio Interceptor for reporting network metrics to Firebase |
+ [postman_dio](https://github.com/zfx-com/postman_dio) | [![Pub](https://img.shields.io/pub/v/postman_dio.svg?style=flat-square)](https://pub.dartlang.org/packages/postman_dio) | A Dio Logger Interceptor for export to 'Postman Collection'.json |
 
 ### Related Projects
 
@@ -365,21 +372,21 @@ dio.interceptors.add(InterceptorsWrapper(
      // Do something before request is sent
      return handler.next(options); //continue
      // If you want to resolve the request with some custom data，
-     // you can resolve a `Response` object eg: `handler.resolve(response)`.
+     // you can resolve a `Response` object eg: return `dio.resolve(response)`.
      // If you want to reject the request with a error message,
-     // you can reject a `DioError` object eg: `handler.reject(dioError)`
+     // you can reject a `DioError` object eg: return `dio.reject(dioError)`
     },
     onResponse:(response,handler) {
      // Do something with response data
      return handler.next(response); // continue
      // If you want to reject the request with a error message,
-     // you can reject a `DioError` object eg: `handler.reject(dioError)` 
+     // you can reject a `DioError` object eg: return `dio.reject(dioError)` 
     },
     onError: (DioError e, handler) {
      // Do something with response error
      return  handler.next(e);//continue
      // If you want to resolve the request with some custom data，
-     // you can resolve a `Response` object eg: `handler.resolve(response)`.  
+     // you can resolve a `Response` object eg: return `dio.resolve(response)`.  
     }
 ));
 
@@ -411,7 +418,7 @@ class CustomInterceptors extends Interceptor {
 
 ### Resolve and reject the request
 
-In all interceptors, you can interfere with their execution flow. If you want to resolve the request/response with some custom data，you can call `handler.resolve(Response)`.  If you want to reject the request/response with a error message, you can call `handler.reject(dioError)` .
+In all interceptors, you can interfere with their execution flow. If you want to resolve the request/response with some custom data，you can return a `Response` object or return `dio.resolve(data)`.  If you want to reject the request/response with a error message, you can return a `DioError` object or return `dio.reject(errMsg)` .
 
 ```dart
 dio.interceptors.add(InterceptorsWrapper(
