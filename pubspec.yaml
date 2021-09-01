@@ -7,8 +7,6 @@ environment:
   sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
-  dio:
-    path: dio
   dio_http2_adapter:
     path: plugins/http2_adapter
   dio_cookie_manager:
